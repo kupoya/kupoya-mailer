@@ -1,5 +1,7 @@
 <?php
 
+define('SITE_URL', 'http://scans.kupoya.com');
+
 	require("phpmailer/class.phpmailer.php");
 
 //	$smtp_host = 'out.bezeqint.out';
@@ -93,6 +95,8 @@ function email($job) {
 function replace_metadata($str, $data) {
 
 
+	$data['brand']['picture'] = site_url($data['brand']['picture']);
+
 	$values = array($data['strategy']['name'], $data['strategy']['description'], $data['brand']['picture'], $data['coupon']['serial']);
 	$place_holders = array('___STRATEGY_NAME___', '___STRATEGY_DESCRIPTION___', '___BRAND_PICTURE___', '___COUPON_CODE___');
 
@@ -101,3 +105,28 @@ function replace_metadata($str, $data) {
 	return $str_replaced;
 
 }
+
+
+
+
+
+/**
+ * Site URL
+ *
+ * Create a local URL based on your basepath. Segments can be passed via the
+ * first parameter either as a string or an array.
+ *
+ * @access	public
+ * @param	string
+ * @return	string
+ */
+function site_url($uri = '')
+{
+
+	// if we recieved a full path simply return it and do not change
+	if ( (substr($uri, 0, 7) === 'http://') || (substr($uri, 0, 8) === 'https://') )
+		return $uri;
+
+	return SITE_URL.$uri;
+}
+
