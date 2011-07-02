@@ -18,6 +18,7 @@ define('SITE_URL', 'http://scans.kupoya.com');
 	$gm_worker = new GearmanWorker();
 	$gm_worker->addServer();
 	$gm_worker->addFunction('email-notification', 'email');
+	$gm_worker->addFunction('email-alerts', 'email_alerts');
 
 	echo 'waiting for job...';
 	while ($gm_worker->work()) {
@@ -29,6 +30,54 @@ define('SITE_URL', 'http://scans.kupoya.com');
  			}
 	}
 
+
+
+function email_alerts($job) {
+
+        $data_raw = $job->workload();
+	$my_alert_email = 'liran.tal@gmail.com';
+
+        if (!$data_raw)
+                return false;
+
+        $data = unserialize($data_raw);
+
+        global $smtp_host;
+        global $smtp_user;
+        global $smtp_pass;
+        global $smtp_port;
+
+        $mail = new PHPMailer();
+
+        // delcare using an smtp server information
+        $mail->isSMTP(true);
+        $mail->Host = $smtp_host;
+        $mail->SMTPAuth = true;
+        $mail->Port = $smtp_port;
+        $mail->Username = $smtp_user;
+        $mail->Password = $smtp_pass;
+
+        $mail->SMTPKeepAlive = true;
+        $mail->SMTPDebug  = 1;
+
+	// html email ?
+        $mail->isHTML(false);
+        $mail->CharSet = 'UTF-8';
+
+
+        $mail->AddAddress($my_alert_email);
+        $mail->From = 'alerts@kupoya.com';
+        $mail->FromName = 'kupoya';
+        $mail->Subject = 'Application alerts';
+        $mail->Body = ($data);
+
+        if (!$mail->Send()) {
+                return 'mail error: '.$mail->ErrorInfo;
+        }
+
+        return true;
+
+}
 
 function email($job) {
 
