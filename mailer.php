@@ -62,7 +62,7 @@ function wedding_email_notification($job) {
        
         $csv_file_attachment = '/tmp/'.md5(time()) . '-' . uniqid().'.csv';
        
-        $strategy_id = mysql_real_escape_string($strategy_id);
+        //$strategy_id = mysql_real_escape_string($strategy_id);
         //$sql = "select name, time, attending, attendees, message INTO OUTFILE '".$csv_file_attachments."' FIELDS TERMINATED BY ',' from wedding where strategy_id = ? order by name";
         $sql = "select name, time, attending, attendees, message from wedding where strategy_id = ? order by name";
         $result = $dbh->prepare($sql);
