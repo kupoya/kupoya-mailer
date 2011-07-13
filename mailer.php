@@ -131,7 +131,7 @@ function wedding_email_notification($job) {
     	    $picture = 'http://scans.kupoya.com/assets/img/notifications/kupoya_medium.png';
 	    
 	    
-	    $values = array($data['strategy']['name'], $total_attending, $total_guests, date('Y-m-d'), $picture);
+	    $values = array($data['strategy']['name'], $total_attending, $total_guests, date('F d'), $picture);
 	    $place_holders = array('___STRATEGY_NAME___', '___TOTAL_ATTENDING___', '___TOTAL___', '___DATE___', '___STRATEGY_PICTURE___');
 
 	    $str_replaced = str_replace($place_holders, $values, $str);
