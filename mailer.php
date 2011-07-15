@@ -73,7 +73,7 @@ function wedding_email_notification($job) {
         
         $result->setFetchMode(PDO::FETCH_ASSOC);
         while ($row = $result->fetch()) {
-            $file_data .= $row['name'] . ',' . $row['time'] . ',' . $row['attending'] . ',' . $row['attendees'] . ',' . $row['message'] . "\n";
+            $file_data .= trim($row['name']) . ',' . $row['time'] . ',' . $row['attending'] . ',' . $row['attendees'] . ',' . trim($row['message']) . "\n";
         }
         
         file_put_contents($csv_file_attachment, $file_data);   
