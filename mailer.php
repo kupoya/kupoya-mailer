@@ -64,7 +64,7 @@ function wedding_email_notification($job) {
        
         //$strategy_id = mysql_real_escape_string($strategy_id);
         //$sql = "select name, time, attending, attendees, message INTO OUTFILE '".$csv_file_attachments."' FIELDS TERMINATED BY ',' from wedding where strategy_id = ? order by name";
-        $sql = "select name, time, IF(attendees=1,'Yes','No') AS attending, attendees, message from wedding where strategy_id = ? order by name";
+        $sql = "select name, time, IF(attending=1,'Yes','No') AS attending, attendees, message from wedding where strategy_id = ? order by name";
         $result = $dbh->prepare($sql);
         $result->bindParam(1, $strategy_id);
         $result->execute();
