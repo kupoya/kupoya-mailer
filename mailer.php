@@ -80,7 +80,8 @@ function wedding_email_notification($job) {
         
         
         
-        $sql = "select SUM(IF(attending=1,1,0)) as attending, SUM(IF(attending=0,1,0)) as not_attending, COUNT(attending) as total from wedding where strategy_id=? LIMIT 1";
+        //$sql = "select SUM(IF(attending=1,1,0)) as attending, SUM(IF(attending=0,1,0)) as not_attending, COUNT(attending) as total from wedding where strategy_id=? LIMIT 1";
+        $sql = "select SUM(IF(attending=1,attendees+1,0)) as attending from wedding where strategy_id=? LIMIT 1";
         
         $result = $dbh->prepare($sql);
         $result->bindParam(1, $strategy_id);
@@ -91,8 +92,8 @@ function wedding_email_notification($job) {
         $row = $result->fetch();
         
         $total_attending = $row['attending'];
-        $total_not_attending = $row['not_attending'];
-        $total_guests = $row['total'];
+        //$total_not_attending = $row['not_attending'];
+        //$total_guests = $row['total'];
                 
         $result->closeCursor();
 	
@@ -131,8 +132,8 @@ function wedding_email_notification($job) {
     	    $picture = 'http://scans.kupoya.com/assets/img/notifications/kupoya_medium.png';
 	    
 	    
-	    $values = array($data['strategy']['name'], $total_attending, $total_guests, date('F d'), $picture);
-	    $place_holders = array('___STRATEGY_NAME___', '___TOTAL_ATTENDING___', '___TOTAL___', '___DATE___', '___STRATEGY_PICTURE___');
+	    $values = array($data['strategy']['name'], $total_attending, date('F d'), $picture);
+	    $place_holders = array('___STRATEGY_NAME___', '___TOTAL_ATTENDING___', '___DATE___', '___STRATEGY_PICTURE___');
 
 	    $str_replaced = str_replace($place_holders, $values, $str);
 
