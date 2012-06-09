@@ -487,13 +487,17 @@ function notification_coupon_email($job) {
 		$data['strategy']['description'],
 		$picture,
 		$data['coupon']['serial'],
+		$data['coupon']['purchased_time'],
+		$data['coupon']['id'],
 	);
 	
 	$place_holders = array(
 		'___STRATEGY_NAME___',
 		'___STRATEGY_DESCRIPTION___',
 		'___BRAND_PICTURE___',
-		'___COUPON_CODE___'
+		'___COUPON_ID___'
+		'___PURCHASED_TIME___'
+		'___COUPON_ID___'
 	);
 
 	// apply token variables
