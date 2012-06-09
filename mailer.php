@@ -495,7 +495,7 @@ function notification_coupon_email($job) {
 		'___STRATEGY_NAME___',
 		'___STRATEGY_DESCRIPTION___',
 		'___BRAND_PICTURE___',
-		'___COUPON_ID___',
+		'___COUPON_CODE___',
 		'___PURCHASED_TIME___',
 		'___COUPON_ID___'
 	);
