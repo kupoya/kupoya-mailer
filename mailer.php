@@ -481,7 +481,7 @@ function notification_coupon_email($job) {
 	$template = get_email_template($dbh, 'notification_coupon_email');
 	if (!$template)
 		return false;
-	
+	/*
 	$values = array(
 		$name,
 		$data['strategy']['description'],
@@ -499,16 +499,17 @@ function notification_coupon_email($job) {
 		'___PURCHASED_TIME___',
 		'___COUPON_ID___'
 	);
+	*/
 
 	// apply token variables
-	$template_text = metadata_alter($template, $values, $place_holders);
+	$template_text = metadata_alter($template, $data['tokens']['values'], $data['tokens']['place_holders']);
 	if ($template_text === false)
 		return false;
 	
 	// email it
 	$options['mail']['recipients'] = array($email_recipient);
 	$options['mail']['subject'] = 'Redeem your coupon code';
-	$options['mail']['message'] = $template_text;	
+	$options['mail']['message'] = $template_text;
 	
 	$email_res = email($options);
 	if ($email_res !== true)
